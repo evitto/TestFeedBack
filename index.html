@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Feedback Form</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Inter,Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f7f5ef;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.card{
+  width:100%;
+  max-width:480px;
+  background:white;
+  border-radius:18px;
+  padding:35px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+
+.progress{
+  height:5px;
+  background:#eee;
+  margin:-35px -35px 35px;
+}
+
+.progress-bar{
+  height:100%;
+  width:20%;
+  background:#2f6f5e;
+  transition:.3s;
+}
+
+
+.step{
+  display:none;
+  animation:slide .35s ease;
+}
+
+.step.active{
+  display:block;
+}
+
+
+@keyframes slide{
+  from{
+    opacity:0;
+    transform:translateX(50px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+}
+
+
+h1{
+  font-size:32px;
+  margin-bottom:15px;
+}
+
+p{
+  color:#666;
+  line-height:1.5;
+}
+
+
+label{
+  display:block;
+  margin-top:20px;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+
+input,
+textarea,
+select{
+
+width:100%;
+padding:14px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:16px;
+
+}
+
+
+textarea{
+height:120px;
+resize:none;
+}
+
+
+button{
+
+margin-top:25px;
+padding:14px 22px;
+border:0;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+
+}
+
+
+.next,
+.submit{
+
+background:#2f6f5e;
+color:white;
+
+}
+
+
+.back{
+
+background:#eee;
+
+}
+
+
+.actions{
+
+display:flex;
+justify-content:space-between;
+
+}
+
+
+.rating{
+
+display:flex;
+gap:10px;
+margin-top:20px;
+
+}
+
+
+.star{
+
+font-size:30px;
+cursor:pointer;
+color:#ccc;
+
+}
+
+
+.star.active{
+
+color:#2f6f5e;
+
+}
+
+
+.success{
+
+text-align:center;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+<div class="progress">
+<div class="progress-bar" id="bar"></div>
+</div>
+
+
+<form id="feedback">
+
+
+<!-- STEP 1 -->
+
+<div class="step active">
+
+<h1>👋 Hello</h1>
+
+<p>
+We would love to hear your feedback.
+</p>
+
+
+<button type="button" class="next">
+Start →
+</button>
+
+</div>
+
+
+
+<!-- STEP 2 -->
+
+<div class="step">
+
+<h1>Your name?</h1>
+
+<input 
+name="name"
+placeholder="John Smith"
+required>
+
+
+<div class="actions">
+
+<button type="button" class="back">
+← Back
+</button>
+
+<button type="button" class="next">
+Next →
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<!-- STEP 3 -->
+
+<div class="step">
+
+<h1>Your email?</h1>
+
+<input
+type="email"
+name="email"
+placeholder="john@email.com">
+
+
+<div class="actions">
+
+<button type="button" class="back">
+← Back
+</button>
+
+<button type="button" class="next">
+Next →
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- STEP 4 -->
+
+<div class="step">
+
+
+<h1>Rate us</h1>
+
+
+<div class="rating">
+
+<span class="star" data-value="1">★</span>
+<span class="star" data-value="2">★</span>
+<span class="star" data-value="3">★</span>
+<span class="star" data-value="4">★</span>
+<span class="star" data-value="5">★</span>
+
+</div>
+
+
+<input 
+type="hidden"
+name="rating"
+id="rating">
+
+
+<div class="actions">
+
+<button type="button" class="back">
+← Back
+</button>
+
+
+<button type="button" class="next">
+Next →
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- STEP 5 -->
+
+<div class="step">
+
+
+<h1>Your feedback?</h1>
+
+
+<textarea
+name="feedback"
+placeholder="Tell us what you think..."
+required></textarea>
+
+
+<div class="actions">
+
+<button type="button" class="back">
+← Back
+</button>
+
+
+<button type="submit" class="submit">
+Send
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<!-- THANK YOU -->
+
+<div class="step success">
+
+<h1>🎉 Thank you!</h1>
+
+<p>
+Your feedback has been received.
+</p>
+
+</div>
+
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+const steps=document.querySelectorAll(".step");
+const bar=document.getElementById("bar");
+
+let current=0;
+
+
+function showStep(number){
+
+steps[current].classList.remove("active");
+
+current=number;
+
+steps[current].classList.add("active");
+
+
+bar.style.width=((current+1)/steps.length)*100+"%";
+
+}
+
+
+
+document.querySelectorAll(".next")
+.forEach(btn=>{
+
+btn.onclick=()=>{
+
+showStep(current+1);
+
+};
+
+});
+
+
+
+document.querySelectorAll(".back")
+.forEach(btn=>{
+
+btn.onclick=()=>{
+
+showStep(current-1);
+
+};
+
+});
+
+
+
+
+
+const stars=document.querySelectorAll(".star");
+
+stars.forEach(star=>{
+
+
+star.onclick=()=>{
+
+let value=star.dataset.value;
+
+
+document.getElementById("rating").value=value;
+
+
+stars.forEach(s=>{
+
+s.classList.toggle(
+"active",
+s.dataset.value<=value
+);
+
+});
+
+
+};
+
+
+});
+
+
+
+
+
+// Apps Script URL
+
+const SCRIPT_URL=
+"https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+
+
+
+document.getElementById("feedback")
+.addEventListener("submit",function(e){
+
+
+e.preventDefault();
+
+
+
+fetch(SCRIPT_URL,{
+
+method:"POST",
+
+mode:"no-cors",
+
+body:JSON.stringify(
+Object.fromEntries(new FormData(this))
+)
+
+})
+.then(()=>{
+
+showStep(5);
+
+});
+
+
+});
+
+
+
+</script>
+
+
+</body>
+</html>
